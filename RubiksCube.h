@@ -43,60 +43,62 @@ struct RubiksCube {
         {BLACK, ColorScheme[RIGHT], ColorScheme[FRONT], BLACK, BLACK, BLACK}));
 
     // bottom layer
+    cubies.push_back(Cubie({pos.x - l, pos.y - l, pos.z - l},
+                           {BLACK, BLACK, BLACK, ColorScheme[LEFT],
+                            ColorScheme[BACK], ColorScheme[DOWN]}));
     cubies.push_back(Cubie(
-        {pos.x - l, pos.y, pos.z - l},
-        {BLACK, BLACK, BLACK, ColorScheme[LEFT], ColorScheme[BACK], BLACK}));
-    cubies.push_back(
-        Cubie({pos.x, pos.y, pos.z - l},
-              {BLACK, BLACK, BLACK, BLACK, ColorScheme[BACK], BLACK}));
+        {pos.x, pos.y - l, pos.z - l},
+        {BLACK, BLACK, BLACK, BLACK, ColorScheme[BACK], ColorScheme[DOWN]}));
+    cubies.push_back(Cubie({pos.x + l, pos.y - l, pos.z - l},
+                           {BLACK, ColorScheme[RIGHT], BLACK, BLACK,
+                            ColorScheme[BACK], ColorScheme[DOWN]}));
     cubies.push_back(Cubie(
-        {pos.x + l, pos.y, pos.z - l},
-        {BLACK, ColorScheme[RIGHT], BLACK, BLACK, ColorScheme[BACK], BLACK}));
+        {pos.x - l, pos.y - l, pos.z},
+        {BLACK, BLACK, BLACK, ColorScheme[LEFT], BLACK, ColorScheme[DOWN]}));
     cubies.push_back(
-        Cubie({pos.x - l, pos.y, pos.z},
-              {BLACK, BLACK, BLACK, ColorScheme[LEFT], BLACK, BLACK}));
-    cubies.push_back(Cubie({pos.x, pos.y, pos.z},
-                           {BLACK, BLACK, BLACK, BLACK, BLACK, BLACK}));
-    cubies.push_back(
-        Cubie({pos.x + l, pos.y, pos.z},
-              {BLACK, ColorScheme[RIGHT], BLACK, BLACK, BLACK, BLACK}));
+        Cubie({pos.x, pos.y - l, pos.z},
+              {BLACK, BLACK, BLACK, BLACK, BLACK, ColorScheme[DOWN]}));
     cubies.push_back(Cubie(
-        {pos.x - l, pos.y, pos.z + l},
-        {BLACK, BLACK, ColorScheme[FRONT], ColorScheme[LEFT], BLACK, BLACK}));
-    cubies.push_back(
-        Cubie({pos.x, pos.y, pos.z + l},
-              {BLACK, BLACK, ColorScheme[FRONT], BLACK, BLACK, BLACK}));
+        {pos.x + l, pos.y - l, pos.z},
+        {BLACK, ColorScheme[RIGHT], BLACK, BLACK, BLACK, ColorScheme[DOWN]}));
+    cubies.push_back(Cubie({pos.x - l, pos.y - l, pos.z + l},
+                           {BLACK, BLACK, ColorScheme[FRONT], ColorScheme[LEFT],
+                            BLACK, ColorScheme[DOWN]}));
     cubies.push_back(Cubie(
-        {pos.x + l, pos.y, pos.z + l},
-        {BLACK, ColorScheme[RIGHT], ColorScheme[FRONT], BLACK, BLACK, BLACK}));
+        {pos.x, pos.y - l, pos.z + l},
+        {BLACK, BLACK, ColorScheme[FRONT], BLACK, BLACK, ColorScheme[DOWN]}));
+    cubies.push_back(Cubie({pos.x + l, pos.y - l, pos.z + l},
+                           {BLACK, ColorScheme[RIGHT], ColorScheme[FRONT],
+                            BLACK, BLACK, ColorScheme[DOWN]}));
 
     // top layer
+    cubies.push_back(Cubie({pos.x - l, pos.y + l, pos.z - l},
+                           {ColorScheme[TOP], BLACK, BLACK, ColorScheme[LEFT],
+                            ColorScheme[BACK], BLACK}));
     cubies.push_back(Cubie(
-        {pos.x - l, pos.y, pos.z - l},
-        {BLACK, BLACK, BLACK, ColorScheme[LEFT], ColorScheme[BACK], BLACK}));
-    cubies.push_back(
-        Cubie({pos.x, pos.y, pos.z - l},
-              {BLACK, BLACK, BLACK, BLACK, ColorScheme[BACK], BLACK}));
+        {pos.x, pos.y + l, pos.z - l},
+        {ColorScheme[TOP], BLACK, BLACK, BLACK, ColorScheme[BACK], BLACK}));
+    cubies.push_back(Cubie({pos.x + l, pos.y + l, pos.z - l},
+                           {ColorScheme[TOP], ColorScheme[RIGHT], BLACK, BLACK,
+                            ColorScheme[BACK], BLACK}));
     cubies.push_back(Cubie(
-        {pos.x + l, pos.y, pos.z - l},
-        {BLACK, ColorScheme[RIGHT], BLACK, BLACK, ColorScheme[BACK], BLACK}));
+        {pos.x - l, pos.y + l, pos.z},
+        {ColorScheme[TOP], BLACK, BLACK, ColorScheme[LEFT], BLACK, BLACK}));
     cubies.push_back(
-        Cubie({pos.x - l, pos.y, pos.z},
-              {BLACK, BLACK, BLACK, ColorScheme[LEFT], BLACK, BLACK}));
-    cubies.push_back(Cubie({pos.x, pos.y, pos.z},
-                           {BLACK, BLACK, BLACK, BLACK, BLACK, BLACK}));
-    cubies.push_back(
-        Cubie({pos.x + l, pos.y, pos.z},
-              {BLACK, ColorScheme[RIGHT], BLACK, BLACK, BLACK, BLACK}));
+        Cubie({pos.x, pos.y + l, pos.z},
+              {ColorScheme[TOP], BLACK, BLACK, BLACK, BLACK, BLACK}));
     cubies.push_back(Cubie(
-        {pos.x - l, pos.y, pos.z + l},
-        {BLACK, BLACK, ColorScheme[FRONT], ColorScheme[LEFT], BLACK, BLACK}));
-    cubies.push_back(
-        Cubie({pos.x, pos.y, pos.z + l},
-              {BLACK, BLACK, ColorScheme[FRONT], BLACK, BLACK, BLACK}));
+        {pos.x + l, pos.y + l, pos.z},
+        {ColorScheme[TOP], ColorScheme[RIGHT], BLACK, BLACK, BLACK, BLACK}));
+    cubies.push_back(Cubie({pos.x - l, pos.y + l, pos.z + l},
+                           {ColorScheme[TOP], BLACK, ColorScheme[FRONT],
+                            ColorScheme[LEFT], BLACK, BLACK}));
     cubies.push_back(Cubie(
-        {pos.x + l, pos.y, pos.z + l},
-        {BLACK, ColorScheme[RIGHT], ColorScheme[FRONT], BLACK, BLACK, BLACK}));
+        {pos.x, pos.y + l, pos.z + l},
+        {ColorScheme[TOP], BLACK, ColorScheme[FRONT], BLACK, BLACK, BLACK}));
+    cubies.push_back(Cubie({pos.x + l, pos.y + l, pos.z + l},
+                           {ColorScheme[TOP], ColorScheme[RIGHT],
+                            ColorScheme[FRONT], BLACK, BLACK, BLACK}));
   }
 
   void draw() const {
