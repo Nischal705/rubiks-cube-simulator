@@ -1,7 +1,10 @@
 #pragma once
+#include "Moves.h"
 #include "cubies.h"
 #include "raylib.h"
 #include "rlgl.h"
+#include <iostream>
+#include <queue>
 #include <vector>
 
 enum FACE_ID { TOP = 0, RIGHT, FRONT, LEFT, BACK, DOWN };
@@ -10,7 +13,10 @@ struct RubiksCube {
   std::vector<Cubie> cubies;
   Vector3 pos = {0.0f, 0.0f, 0.0f};
   float len = 3.0f;
-
+  Move::MOVE curr_move = Move::NO_MOVE;
+  float angle = 0.0f;
+  float step = 700.0f; // angle per seceond
+  inline static std::queue<Move::MOVE> moves_queue;
   Color ColorScheme[6] = {YELLOW, RED, GREEN, ORANGE, BLUE, WHITE};
 
   RubiksCube() {
@@ -101,13 +107,30 @@ struct RubiksCube {
                             ColorScheme[FRONT], BLACK, BLACK, BLACK}));
   }
 
+  void update() {
+
+    if (angle >= 90 || curr_move == Move::NO_MOVE) {
+      angle = 0;
+      // get move from queue if queue not empty
+      if (!moves_queue.empty()) {
+        curr_move = moves_queue.front();
+        moves_queue.pop();
+      } else {
+        curr_move = Move::NO_MOVE;
+      }
+    } else {
+      angle += step * GetFrameTime();
+    }
+  }
+
   void draw() const {
-    static float angle;
-    angle += 9;
     for (int i = 0; i < cubies.size(); i++) {
-      if (cubies[i].pos.x == cubies[0].l) {
+      if (cubies[i].fallsInFace(curr_move)) {
+        Vector3 axis = Move::getAxis(curr_move);
+        // std::cout << axis.x << " " << axis.y << " " << axis.z << std::endl;
         rlPushMatrix();
-        rlRotatef(angle, -1, 0, 0);
+        rlRotatef(angle, axis.x, axis.y, axis.z);
+        // std::cout << angle << std::endl;
         cubies[i].draw();
         rlPopMatrix();
       } else

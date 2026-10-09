@@ -71,7 +71,7 @@ struct Cubie {
     rlEnd();
   }
 
-  bool fallsInFace(Move::MOVE curr_move) {
+  bool fallsInFace(Move::MOVE curr_move) const {
     float ok_error = 0.01f;
     switch (curr_move) {
     case Move::R:
@@ -92,6 +92,11 @@ struct Cubie {
     case Move::B:
     case Move::B_PRIME:
       return fabs(this->pos.z + l) <= ok_error;
+    case Move::Y:
+    case Move::Y_PRIME:
+    case Move::X:
+    case Move::X_PRIME:
+      return true;
     default:
       return false;
     }

@@ -4,6 +4,7 @@
 namespace Move {
 
 enum MOVE {
+  NO_MOVE,
   R,
   R_PRIME,
   L,
@@ -15,21 +16,26 @@ enum MOVE {
   F,
   F_PRIME,
   B,
-  B_PRIME
+  B_PRIME,
+  // including rotations too
+  Y,
+  Y_PRIME,
+  X,
+  X_PRIME
 };
 
 Vector3 getAxis(MOVE curr_move) {
-  if (curr_move == R)
+  if (curr_move == R || curr_move == X)
     return {-1, 0, 0};
-  if (curr_move == R_PRIME)
+  if (curr_move == R_PRIME || curr_move == X_PRIME)
     return {1, 0, 0};
   if (curr_move == L)
     return {1, 0, 0};
   if (curr_move == L_PRIME)
     return {-1, 0, 0};
-  if (curr_move == U)
+  if (curr_move == U || curr_move == Y)
     return {0, -1, 0};
-  if (curr_move == U_PRIME)
+  if (curr_move == U_PRIME || curr_move == Y_PRIME)
     return {0, 1, 0};
   if (curr_move == D)
     return {0, 1, 0};
