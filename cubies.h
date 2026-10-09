@@ -1,7 +1,9 @@
 #pragma once
+#include "Moves.h"
 #include "raylib.h"
 #include "rlgl.h"
 #include "vector"
+#include <cmath>
 
 enum CUBIE_TYPE { CENTER = 1, EDGE, CORNER };
 
@@ -67,5 +69,31 @@ struct Cubie {
 
     // DrawCubeWires(pos, l, l, l, BLACK);
     rlEnd();
+  }
+
+  bool fallsInFace(Move::MOVE curr_move) {
+    float ok_error = 0.01f;
+    switch (curr_move) {
+    case Move::R:
+    case Move::R_PRIME:
+      return fabs(this->pos.x - l) <= ok_error;
+    case Move::L:
+    case Move::L_PRIME:
+      return fabs(this->pos.x + l) <= ok_error;
+    case Move::D:
+    case Move::D_PRIME:
+      return fabs(this->pos.y + l) <= ok_error;
+    case Move::U:
+    case Move::U_PRIME:
+      return fabs(this->pos.y - l) <= ok_error;
+    case Move::F:
+    case Move::F_PRIME:
+      return fabs(this->pos.z - l) <= ok_error;
+    case Move::B:
+    case Move::B_PRIME:
+      return fabs(this->pos.z + l) <= ok_error;
+    default:
+      return false;
+    }
   }
 };

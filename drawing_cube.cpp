@@ -40,8 +40,6 @@ int main() {
 
     rubiksCube.draw();
 
-    // DrawCube({0.0f, 0.0f, 0.0f}, 1, 1, 1, YELLOW);
-    // DrawCubeWires({0.0f, 0.0f, 0.0f}, 1, 1, 1, BLACK);
     DrawGrid(20, 1.0f);
 
     EndMode3D();

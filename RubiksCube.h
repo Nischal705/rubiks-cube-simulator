@@ -102,8 +102,16 @@ struct RubiksCube {
   }
 
   void draw() const {
+    static float angle;
+    angle += 9;
     for (int i = 0; i < cubies.size(); i++) {
-      cubies[i].draw();
+      if (cubies[i].pos.x == cubies[0].l) {
+        rlPushMatrix();
+        rlRotatef(angle, -1, 0, 0);
+        cubies[i].draw();
+        rlPopMatrix();
+      } else
+        cubies[i].draw();
     }
   }
 };
