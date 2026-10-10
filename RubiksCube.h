@@ -1,4 +1,5 @@
 #pragma once
+#include "Maths.h"
 #include "Moves.h"
 #include "cubies.h"
 #include "raylib.h"
@@ -111,6 +112,12 @@ struct RubiksCube {
 
     if (angle >= 90 || curr_move == Move::NO_MOVE) {
       angle = 0;
+      // fix the stickers for angle >= 90 case
+      // in that fixing function just early return if NO_MOVE
+      // take curr_move as input, maybe swap positions and colors cyclically
+      // then fix each cubie's stickers
+      //
+      //
       // get move from queue if queue not empty
       if (!moves_queue.empty()) {
         curr_move = moves_queue.front();
