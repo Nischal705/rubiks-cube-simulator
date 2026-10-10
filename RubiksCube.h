@@ -16,12 +16,13 @@ struct RubiksCube {
   float len = 3.0f;
   Move::MOVE curr_move = Move::NO_MOVE;
   float angle = 0.0f;
-  float step = 700.0f; // angle per seceond
+  float step = 1000.0f; // angle per seceond
   inline static std::queue<Move::MOVE> moves_queue;
   Color ColorScheme[6] = {YELLOW, RED, GREEN, ORANGE, BLUE, WHITE};
 
   RubiksCube() {
     float l = len / 3;
+    // middle layer
     cubies.push_back(Cubie(
         {pos.x - l, pos.y, pos.z - l},
         {BLACK, BLACK, BLACK, ColorScheme[LEFT], ColorScheme[BACK], BLACK}));
@@ -110,7 +111,9 @@ struct RubiksCube {
 
   void update() {
 
-    if (angle >= 90 || curr_move == Move::NO_MOVE) {
+    if (angle >= 90 ||
+        curr_move == Move::NO_MOVE) { // first move is NO_MOVE so
+                                      // remove it after valid move arrives
       angle = 0;
       // fix the stickers for angle >= 90 case
       // in that fixing function just early return if NO_MOVE
@@ -118,6 +121,8 @@ struct RubiksCube {
       // then fix each cubie's stickers
       //
       //
+      if (curr_move != Move::NO_MOVE)
+        updatePositionAndOrientationOfCubies(curr_move);
       // get move from queue if queue not empty
       if (!moves_queue.empty()) {
         curr_move = moves_queue.front();
@@ -143,5 +148,11 @@ struct RubiksCube {
       } else
         cubies[i].draw();
     }
+  }
+
+  void updatePositionAndOrientationOfCubies(Move::MOVE curr_move) {
+    for (int i = 0; i < cubies.size(); i++)
+      if (cubies[i].fallsInFace(curr_move))
+        cubies[i].updatePositionAndOrientation(curr_move);
   }
 };

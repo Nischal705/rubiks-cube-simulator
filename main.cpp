@@ -40,12 +40,13 @@ int main() {
       camera.target = {0.0f, 0.0f, 0.0f};
 
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    // ClearBackground({105, 187, 236});
+    ClearBackground({214, 220, 148});
     BeginMode3D(camera);
 
     rubiksCube.draw();
 
-    DrawGrid(20, 1.0f);
+    // DrawGrid(20, 1.0f);
 
     EndMode3D();
     EndDrawing();
