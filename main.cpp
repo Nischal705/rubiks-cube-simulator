@@ -9,6 +9,7 @@ int main() {
 
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Cubes");
 
+  // camera settings
   Camera3D camera = {0};
   camera.position = {1.0f, 3.0f, 4.0f};
   camera.target = {0.0f, 0.0f, 0.0f};
@@ -16,8 +17,6 @@ int main() {
   // camera.fovy = 85.0f;
   camera.fovy = 10.0f;
   camera.projection = CAMERA_ORTHOGRAPHIC;
-
-  Vector3 position = {0.0f, 0.0f, 0.0f};
 
   SetTargetFPS(FPS);
   // DisableCursor();
