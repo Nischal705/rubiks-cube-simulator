@@ -5,7 +5,7 @@
 #include "raylib.h"
 #include <rlgl.h>
 int main() {
-  const int SCREEN_WIDTH = 800, SCREEN_HEIGHT = 640;
+  const int SCREEN_WIDTH = 1820, SCREEN_HEIGHT = 980;
   int FPS = 60;
 
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Cubes");
@@ -28,8 +28,7 @@ int main() {
   // DisableCursor();
 
   // Timer
-  Timer timer;
-  timer.setTimerAttributes({80, 80}, 30, BLACK);
+  Timer timer({GetScreenWidth() * 0.2f, GetScreenHeight() * 0.5f}, 140, BLACK);
 
   while (!WindowShouldClose()) {
 
@@ -45,8 +44,11 @@ int main() {
       }
     }
 
-    if (timer.isRunning())
+    if (timer.isRunning()) {
       timer.update();
+      if (rubiksCube.isSolved())
+        timer.stop();
+    }
     timer.display();
     // UpdateCamera(&camera, CAMERA_FREE);
     rubiksCube.update();

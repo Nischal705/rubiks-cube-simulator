@@ -86,4 +86,18 @@ struct Cubie {
       corner_vecs[i] = Maths::rotatePlus90AroundGivenAxis(corner_vecs[i], axis);
     }
   }
+
+  Color colorInTheDirection(Move::MOVE dir_move) {
+    Vector3 dir = Move::getAxis(dir_move);
+    static float threshold = 0.2f;
+    for (int face_idx = 0; face_idx < 6; face_idx++) {
+      Vector3 sum = {0, 0, 0};
+      for (int corner_idx : pointsOfFaces[face_idx]) {
+        sum = Maths::operator+(sum, corner_vecs[corner_idx]);
+      }
+      if (Maths::dot(sum, dir) > threshold)
+        return colors[face_idx];
+    }
+    return BLACK;
+  }
 };

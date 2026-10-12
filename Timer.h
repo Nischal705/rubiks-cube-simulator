@@ -78,16 +78,17 @@ class Timer {
   int fontSize = 30;
   Color fontColor = BLACK;
   int fontSpacing = 2;
-  Font fontStyle = LoadFont("/usr/share/fonts/truetype/lato/Lato-Black.ttf");
+  Font fontStyle;
 
 public:
-  Timer() { t_state = STOPPED; }
-
-  void setTimerAttributes(Vector2 pos, int fontSize = 30,
-                          Color fontColor = BLACK) {
+  Timer(Vector2 pos, int fontSize = 30, Color fontColor = BLACK) {
     this->pos = pos;
     this->fontSize = fontSize;
     this->fontColor = fontColor;
+    fontStyle =
+        LoadFontEx("/usr/share/fonts/truetype/iosevka/Iosevka-BoldItalic.ttf",
+                   fontSize, 0, 0);
+    t_state = STOPPED;
   }
 
   void reset() { t.m = t.s = t.ms = 0; }
@@ -106,5 +107,4 @@ public:
   }
 
   bool isRunning() { return t_state == RUNNING; }
-
 };

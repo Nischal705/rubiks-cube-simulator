@@ -154,7 +154,28 @@ struct RubiksCube {
 
   void updatePositionAndOrientationOfCubies(Move::MOVE curr_move) {
     for (int i = 0; i < cubies.size(); i++)
-      if (cubies[i].fallsInFace(curr_move, pos))
+      if (cubies[i].fallsInFace(curr_move, pos)) {
         cubies[i].updatePositionAndOrientation(curr_move, pos);
+        // check if cubie in correct position
+      }
+  }
+
+  bool isSolved() {
+    Color color_of_face[20];
+    std::vector<bool> first_of_face(20, true);
+    for (auto &cube : cubies) {
+      for (Move::MOVE move : {Move::U_PRIME, Move::F_PRIME, Move::R_PRIME,
+                              Move::L_PRIME, Move::D_PRIME}) {
+        if (cube.fallsInFace(move, pos)) {
+          if (first_of_face[move]) {
+            color_of_face[move] = cube.colorInTheDirection(move);
+            first_of_face[move] = false;
+          } else if (!ColorIsEqual(cube.colorInTheDirection(move),
+                                   color_of_face[move]))
+            return false;
+        }
+      }
+    }
+    return true;
   }
 };
