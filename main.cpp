@@ -32,29 +32,14 @@ int main() {
 
   while (!WindowShouldClose()) {
 
-    int key = GetKeyPressed();
-    InputHandler::manageMoves(key);
-    // ---- timer feature added from here ---- //
-    if (key == KEY_SPACE) {
-      if (timer.isRunning()) {
-        timer.stop();
-      } else {
-        timer.reset();
-        timer.start();
-      }
-    }
+    InputHandler::manageProgramFlow(rubiksCube, timer);
 
-    if (timer.isRunning()) {
-      timer.update();
-      if (rubiksCube.isSolved())
-        timer.stop();
-    }
     timer.display();
     // UpdateCamera(&camera, CAMERA_FREE);
-    rubiksCube.update();
+    // rubiksCube.update();
 
-    if (IsKeyPressed(KEY_Z))
-      camera.target = {0.0f, 0.0f, 0.0f};
+    // if (IsKeyPressed(KEY_Z))
+    //   camera.target = {0.0f, 0.0f, 0.0f};
 
     BeginDrawing();
     // ClearBackground({105, 187, 236});

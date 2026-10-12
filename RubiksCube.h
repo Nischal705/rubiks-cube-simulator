@@ -9,6 +9,7 @@
 #include <vector>
 
 enum FACE_ID { TOP = 0, RIGHT, FRONT, LEFT, BACK, DOWN };
+enum CUBE_STATE { SOLVED, SOLVING, SCRAMBLING, SCRAMBLED };
 
 struct RubiksCube {
   std::vector<Cubie> cubies;
@@ -19,6 +20,7 @@ struct RubiksCube {
   float step = 1000.0f; // angle per seceond
   inline static std::queue<Move::MOVE> moves_queue;
   Color ColorScheme[6] = {YELLOW, RED, GREEN, ORANGE, BLUE, WHITE};
+  CUBE_STATE state = SOLVED;
 
   RubiksCube() {
     float l = len / 3;
@@ -177,5 +179,13 @@ struct RubiksCube {
       }
     }
     return true;
+  }
+
+  void scramble(int scramble_len = 40) {
+    for (int i = 0; i < scramble_len; i++) {
+      curr_move = (Move::MOVE)GetRandomValue(1, 16);
+      // updatePositionAndOrientationOfCubies(curr_move);
+      moves_queue.push(curr_move);
+    }
   }
 };
