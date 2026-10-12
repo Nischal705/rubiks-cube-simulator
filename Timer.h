@@ -31,23 +31,16 @@ struct Time {
   int m, s, ms;
 
   Time() { m = 0, s = 0, ms = 0; };
-  Time(int ms) : m(0), s(0), ms(ms) {};
+  Time(int ms) {
+    this->ms = ms % 1000;
+    s = ms / 1000;
+    m = s / 60;
+    s %= 60;
+    m %= 60;
+  }
   Time(int m, int s, int ms) : m(m), s(s), ms(ms) {}
 
-  void operator+=(Time delta) {
-    ms += delta.ms;
-    if (ms >= 1000) {
-      ms %= 1000;
-      s++;
-    }
-    if (s >= 60) {
-      s %= 60;
-      m++;
-    }
-    if (m >= 60) {
-      m %= 60; // display some msg instead of time later in timer class
-    }
-  }
+  operator int() { return (m * 60 + s) * 1000; }
 
   std::string getString() {
     std::string timeString = "";
@@ -57,12 +50,11 @@ struct Time {
       timeString += std::to_string(s) + ":";
     else if (s >= 0)
       timeString += ("0" + std::to_string(s)) + ":";
-    if (ms >= 100)
-      timeString += std::to_string(ms);
-    else if (ms >= 10)
-      timeString += ("0" + std::to_string(ms));
+    int ms_2_digit = ms / 10;
+    if (ms_2_digit >= 10)
+      timeString += std::to_string(ms_2_digit);
     else
-      timeString += ("00" + std::to_string(ms));
+      timeString += ("0" + std::to_string(ms_2_digit));
 
     return timeString;
   }
@@ -72,6 +64,7 @@ enum TIMER_STATE { RUNNING, STOPPED };
 
 class Timer {
   Time t;
+  int startTime = 0;
   TIMER_STATE t_state;
 
   Vector2 pos;
@@ -89,16 +82,24 @@ public:
         LoadFontEx("/usr/share/fonts/truetype/iosevka/Iosevka-BoldItalic.ttf",
                    fontSize, 0, 0);
     t_state = STOPPED;
+    startTime = 0;
   }
 
-  void reset() { t.m = t.s = t.ms = 0; }
+  void reset() {
+    t.m = t.s = t.ms = 0;
+    startTime = 0;
+  }
 
-  void start() { t_state = RUNNING; }
+  void start() {
+    t_state = RUNNING;
+    startTime = GetTime() * 1000;
+  }
 
   void stop() { t_state = STOPPED; }
 
   void update() { // just add FrameTime
-    t += (int)(GetFrameTime() * 1000);
+    // t += (int)(GetFrameTime() * 1000);
+    t = GetTime() * 1000 - startTime;
   }
 
   void display() {
