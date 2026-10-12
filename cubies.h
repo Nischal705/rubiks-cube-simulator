@@ -45,27 +45,27 @@ struct Cubie {
     rlEnd();
   }
 
-  bool fallsInFace(Move::MOVE curr_move) const {
+  bool fallsInFace(Move::MOVE curr_move, Vector3 RubiksCube_pos) const {
     float ok_error = 0.01f;
     switch (curr_move) {
     case Move::R:
     case Move::R_PRIME:
-      return fabs(this->pos.x - l) <= ok_error;
+      return fabs(this->pos.x - RubiksCube_pos.x - l) <= ok_error;
     case Move::L:
     case Move::L_PRIME:
-      return fabs(this->pos.x + l) <= ok_error;
+      return fabs(this->pos.x - RubiksCube_pos.x + l) <= ok_error;
     case Move::D:
     case Move::D_PRIME:
-      return fabs(this->pos.y + l) <= ok_error;
+      return fabs(this->pos.y - RubiksCube_pos.y + l) <= ok_error;
     case Move::U:
     case Move::U_PRIME:
-      return fabs(this->pos.y - l) <= ok_error;
+      return fabs(this->pos.y - RubiksCube_pos.y - l) <= ok_error;
     case Move::F:
     case Move::F_PRIME:
-      return fabs(this->pos.z - l) <= ok_error;
+      return fabs(this->pos.z - RubiksCube_pos.z - l) <= ok_error;
     case Move::B:
     case Move::B_PRIME:
-      return fabs(this->pos.z + l) <= ok_error;
+      return fabs(this->pos.z - RubiksCube_pos.z + l) <= ok_error;
     case Move::Y:
     case Move::Y_PRIME:
     case Move::X:
@@ -76,9 +76,12 @@ struct Cubie {
     }
   }
 
-  void updatePositionAndOrientation(Move::MOVE curr_move) {
+  void updatePositionAndOrientation(Move::MOVE curr_move,
+                                    Vector3 &RubiksCube_pos) {
     Vector3 axis = Move::getAxis(curr_move);
-    pos = Maths::rotatePlus90AroundGivenAxis(pos, axis);
+    Vector3 pos_vec = Maths::operator-(pos, RubiksCube_pos);
+    pos_vec = Maths::rotatePlus90AroundGivenAxis(pos_vec, axis);
+    pos = Maths::operator+(RubiksCube_pos, pos_vec);
     for (int i = 0; i < 8; i++) {
       corner_vecs[i] = Maths::rotatePlus90AroundGivenAxis(corner_vecs[i], axis);
     }

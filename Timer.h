@@ -52,11 +52,11 @@ struct Time {
   std::string getString() {
     std::string timeString = "";
     if (m > 0)
-      timeString += std::to_string(m);
+      timeString += std::to_string(m) + ":";
     if (s >= 10)
-      timeString += std::to_string(s);
+      timeString += std::to_string(s) + ":";
     else if (s >= 0)
-      timeString += ("0" + std::to_string(s));
+      timeString += ("0" + std::to_string(s)) + ":";
     if (ms >= 100)
       timeString += std::to_string(ms);
     else if (ms >= 10)
@@ -77,6 +77,8 @@ class Timer {
   Vector2 pos;
   int fontSize = 30;
   Color fontColor = BLACK;
+  int fontSpacing = 2;
+  Font fontStyle = LoadFont("/usr/share/fonts/truetype/lato/Lato-Black.ttf");
 
 public:
   Timer() { t_state = STOPPED; }
@@ -95,10 +97,14 @@ public:
   void stop() { t_state = STOPPED; }
 
   void update() { // just add FrameTime
-    t += GetFrameTime();
+    t += (int)(GetFrameTime() * 1000);
   }
 
   void display() {
-    DrawText(t.getString().c_str(), pos.x, pos.y, fontSize, fontColor);
+    DrawTextEx(fontStyle, t.getString().c_str(), pos, fontSize, fontSpacing,
+               fontColor);
   }
+
+  bool isRunning() { return t_state == RUNNING; }
+
 };

@@ -13,8 +13,7 @@ struct InputHandler {
       {KEY_SEMICOLON, Move::Y}, {KEY_A, Move::Y_PRIME}, {KEY_Y, Move::X},
       {KEY_T, Move::X},         {KEY_N, Move::X_PRIME}};
 
-  static void manageMoves() {
-    int key = GetKeyPressed();
+  static void manageMoves(int key) {
     if (mapUserKeysToMoves.find(key) != mapUserKeysToMoves.end())
       RubiksCube::moves_queue.push(mapUserKeysToMoves[key]);
   }

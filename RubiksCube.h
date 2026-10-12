@@ -12,7 +12,7 @@ enum FACE_ID { TOP = 0, RIGHT, FRONT, LEFT, BACK, DOWN };
 
 struct RubiksCube {
   std::vector<Cubie> cubies;
-  Vector3 pos = {0.0f, 0.0f, 0.0f};
+  Vector3 pos = {4.0f, 2.0f, 2.0f};
   float len = 3.0f;
   Move::MOVE curr_move = Move::NO_MOVE;
   float angle = 0.0f;
@@ -137,11 +137,13 @@ struct RubiksCube {
 
   void draw() const {
     for (int i = 0; i < cubies.size(); i++) {
-      if (cubies[i].fallsInFace(curr_move)) {
+      if (cubies[i].fallsInFace(curr_move, pos)) {
         Vector3 axis = Move::getAxis(curr_move);
         // std::cout << axis.x << " " << axis.y << " " << axis.z << std::endl;
         rlPushMatrix();
+        rlTranslatef(pos.x, pos.y, pos.z);
         rlRotatef(angle, axis.x, axis.y, axis.z);
+        rlTranslatef(-pos.x, -pos.y, -pos.z);
         // std::cout << angle << std::endl;
         cubies[i].draw();
         rlPopMatrix();
@@ -152,7 +154,7 @@ struct RubiksCube {
 
   void updatePositionAndOrientationOfCubies(Move::MOVE curr_move) {
     for (int i = 0; i < cubies.size(); i++)
-      if (cubies[i].fallsInFace(curr_move))
-        cubies[i].updatePositionAndOrientation(curr_move);
+      if (cubies[i].fallsInFace(curr_move, pos))
+        cubies[i].updatePositionAndOrientation(curr_move, pos);
   }
 };
