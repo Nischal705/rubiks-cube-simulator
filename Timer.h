@@ -47,9 +47,9 @@ struct Time {
     if (m > 0)
       timeString += std::to_string(m) + ":";
     if (s >= 10)
-      timeString += std::to_string(s) + ":";
+      timeString += std::to_string(s) + ".";
     else if (s >= 0)
-      timeString += ("0" + std::to_string(s)) + ":";
+      timeString += ("0" + std::to_string(s)) + ".";
     int ms_2_digit = ms / 10;
     if (ms_2_digit >= 10)
       timeString += std::to_string(ms_2_digit);

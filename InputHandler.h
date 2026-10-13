@@ -81,6 +81,7 @@ struct InputHandler {
       fileHandler::write(timer);
       fileHandler::updateLatestTimesArray();
       Cube.state = SOLVED;
+      // fall in SOLVED
     case SOLVED:
       if (key == KEY_SPACE) {
         Cube.scramble(); // fills the scramble in moves_queue
