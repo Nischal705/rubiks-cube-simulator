@@ -40,7 +40,7 @@ struct Time {
   }
   Time(int m, int s, int ms) : m(m), s(s), ms(ms) {}
 
-  operator int() { return (m * 60 + s) * 1000; }
+  operator int() { return (m * 60 + s) * 1000 + ms; }
 
   std::string getString() {
     std::string timeString = "";
@@ -85,6 +85,8 @@ public:
     startTime = 0;
   }
 
+  std::string getTime() { return t.getString(); }
+
   void reset() {
     t.m = t.s = t.ms = 0;
     startTime = 0;
@@ -108,4 +110,6 @@ public:
   }
 
   bool isRunning() { return t_state == RUNNING; }
+
+  operator int() { return (int)t; }
 };

@@ -2,6 +2,7 @@
 #include "Moves.h"
 #include "RubiksCube.h"
 #include "Timer.h"
+#include "fileHandler.h"
 #include "raylib.h"
 #include <unordered_map>
 
@@ -71,10 +72,15 @@ struct InputHandler {
       Cube.update();
       timer.update();
       if (Cube.isSolved()) {
-        Cube.state = SOLVED;
+        Cube.state = JUST_SOLVED;
         timer.stop();
       }
       break;
+    case JUST_SOLVED:
+      // manage file records
+      fileHandler::write(timer);
+      fileHandler::updateLatestTimesArray();
+      Cube.state = SOLVED;
     case SOLVED:
       if (key == KEY_SPACE) {
         Cube.scramble(); // fills the scramble in moves_queue

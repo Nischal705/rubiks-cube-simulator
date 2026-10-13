@@ -9,7 +9,7 @@
 #include <vector>
 
 enum FACE_ID { TOP = 0, RIGHT, FRONT, LEFT, BACK, DOWN };
-enum CUBE_STATE { SOLVED, SOLVING, SCRAMBLING, SCRAMBLED };
+enum CUBE_STATE { SOLVED, SOLVING, JUST_SOLVED, SCRAMBLING, SCRAMBLED };
 
 struct RubiksCube {
   std::vector<Cubie> cubies;

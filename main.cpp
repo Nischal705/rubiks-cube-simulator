@@ -1,15 +1,17 @@
+#include "DisplayHandler.h"
 #include "InputHandler.h"
 #include "RubiksCube.h"
 #include "Timer.h"
+#include "constants.h"
 #include "cubies.h"
 #include "raylib.h"
 #include <rlgl.h>
 int main() {
-  const int SCREEN_WIDTH = 1820, SCREEN_HEIGHT = 980;
   int FPS = 60;
 
   InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Cubes");
 
+  DisplayHandler::initialize();
   // font
   // Font fontStyle =
   // LoadFont("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf");
@@ -28,13 +30,12 @@ int main() {
   // DisableCursor();
 
   // Timer
-  Timer timer({GetScreenWidth() * 0.2f, GetScreenHeight() * 0.5f}, 140, BLACK);
+  Timer timer({GetScreenWidth() * 0.2f, GetScreenHeight() * 0.6f}, 140, BLACK);
 
   while (!WindowShouldClose()) {
 
     InputHandler::manageProgramFlow(rubiksCube, timer);
 
-    timer.display();
     // UpdateCamera(&camera, CAMERA_FREE);
     // rubiksCube.update();
 
@@ -44,6 +45,10 @@ int main() {
     BeginDrawing();
     // ClearBackground({105, 187, 236});
     ClearBackground({214, 220, 148});
+
+    timer.display();
+    DisplayHandler::displayHistoryBox();
+
     BeginMode3D(camera);
 
     rubiksCube.draw();
